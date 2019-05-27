@@ -36,4 +36,4 @@
 
 # 创建项目
 
-项目将会使用 [materialize](https://materializecss.com/)前端框架，
+项目将会使用 [materialize](https://materializecss.com/)前端框架，初始的项目文件可以在 [这里](https://github.com/MudOnTire/pwa-tutorial/tree/starter) 获取。
