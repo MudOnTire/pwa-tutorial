@@ -370,3 +370,78 @@ vue add @vue/pwa
   "theme_color": "#4DBA87"
 }
 ```
+
+`manifest.json`中主要包含app的相关信息，比如名称（name）、图标（icons）、显示方式（display）等等，是web app能被以类似原生的方式安装、展示的必要配置信息。更多的配置项可参考 [MDN Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest)。
+
+`registerServiceWorker.js`用于注册service worker。service worker通俗来讲就是在浏览器后台独立于网页运行的一段脚本，service worker可以完成一些特殊的功能，比如：消息推送、后台同步、拦截和处理网络请求、管理网络请求的缓存等。Service worker之于pwa的意义在于能够为用户提供离线体验，即掉线状态下用户依旧能够访问网站并获取已被缓存的数据。使用service worker需要HTTPS，并且考虑 [浏览器兼容性](https://caniuse.com/#search=service%20worker)。
+
+**registerServiceWorker.js**
+
+```
+import { register } from 'register-service-worker'
+
+if (process.env.NODE_ENV === 'production') {
+  register(`${process.env.BASE_URL}service-worker.js`, {
+    ready () {
+      console.log(
+        'App is being served from cache by a service worker.\n' +
+        'For more details, visit https://goo.gl/AFskqB'
+      )
+    },
+    registered () {
+      console.log('Service worker has been registered.')
+    },
+    cached () {
+      console.log('Content has been cached for offline use.')
+    },
+    updatefound () {
+      console.log('New content is downloading.')
+    },
+    updated () {
+      console.log('New content is available; please refresh.')
+    },
+    offline () {
+      console.log('No internet connection found. App is running in offline mode.')
+    },
+    error (error) {
+      console.error('Error during service worker registration:', error)
+    }
+  })
+}
+```
+
+当然，只注册service worker还不够，我们还希望控制service worker的行为，通过在 `vue.config.js` 中增加相关的配置我们可以设置service worker文件的名称、缓存逻辑等等。
+
+**vue.config.js**
+
+```
+module.exports = {
+  pwa: {
+    workboxPluginMode: 'GenerateSW',
+    workboxOptions: {
+      navigateFallback: '/index.html', 
+      runtimeCaching: [
+        {
+          urlPattern: new RegExp('^https://api.zippopotam.us/us/'),
+          handler: 'networkFirst',
+          options: {
+            networkTimeoutSeconds: 20,
+            cacheName: 'api-cache',
+            cacheableResponse: {
+              statuses: [0, 200]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+更多配置请参考：[@vue/cli-plugin-pwa](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa) 和 [workbox-webpack-plugin](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)。由于`@vue/cli-plugin-pwa`生成的service worker只在生产环境生效，所以建议将项目build之后部署到生产环境测试。本文示例使用 [github pages](https://pages.github.com/)。
+
+到此，将普通web app转成PWA的工作基本完成，我们部署到线上看下效果：
+
+**文件已被缓存用于离线访问**
+
+![app](http://lc-jOYHMCEn.cn-n1.lcfile.com/20eff44369b6dab7659f/Screen%20Shot%202019-06-06%20at%2011.37.11%20PM.png)
