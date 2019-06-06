@@ -36,7 +36,7 @@
 
 # 创建项目
 
-项目使用Vue + Ionic的组合进行开发。
+项目使用Vue + Ionic的组合进行开发。使用vscode的同学，建议安装[Vetur](https://vuejs.github.io/vetur/)插件，能增加开发效率哦。
 
 1. 首先全局安装 `@vue/cli`：
 
@@ -134,3 +134,54 @@ export default {
 最后，我们运行`yarn serve`看下效果：
 
 ![1](http://lc-jOYHMCEn.cn-n1.lcfile.com/63ae4b1e9d2926ece165/Screen%20Shot%202019-06-06%20at%2011.58.36%20AM.png)
+
+# 功能实现
+
+## 1. 搜索组件
+
+我们在 `src/components` 下面新建 `ZipSearch.vue` 文件作为邮编搜索组件，内容如下：
+
+**ZipSearch.vue**
+
+```
+<template>
+  <ion-grid>
+    <form>
+      <ion-col>
+        <ion-item>
+          <ion-label>ZipCode:</ion-label>
+          <ion-input name="zip"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block">Find</ion-button>
+      </ion-col>
+    </form>
+  </ion-grid>
+</template>
+
+<script>
+export default {
+  name: "ZipSearch"
+};
+</script>
+```
+
+在 `src/views/Home.vue` 中引入 `ZipSearch` 组件：
+
+```
+...
+    <ion-content class="ion-padding">
+      <ZipSearch/>
+    </ion-content>
+...
+
+import ZipSearch from "../components/ZipSearch";
+
+export default {
+  name: "home",
+  components: {
+    ZipSearch
+  }
+};
+```
