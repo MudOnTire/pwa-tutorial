@@ -36,6 +36,101 @@
 
 # 创建项目
 
-项目将会使用 [materialize](https://materializecss.com/)前端框架，初始的项目文件可以在 [这里](https://github.com/MudOnTire/pwa-tutorial/tree/starter) 获取，本文主要讲解PWA的开发流程，materialize的使用请同学们自行学习。初始项目运行后效果如图：
+项目使用Vue + Ionic的组合进行开发。
 
-![image](http://lc-jOYHMCEn.cn-n1.lcfile.com/ca9f9c7c93e545f6824f/1.jpg)
+1. 首先全局安装 `@vue/cli`：
+
+```
+npm install -g @vue/cli
+```
+
+2. 初始化vue项目：
+
+```
+vue create vue-ionic-pwa
+```
+
+3. 安装 `vue-router`，因为ionic的路由依赖于`vue-router`：
+
+```
+vue add router
+```
+
+4. 安装 `@ionic/vue`
+
+```
+npm install @ionic/vue
+```
+
+5. 在 `src/main.js` 中添加对ionic的引用：
+
+```
+...
+import Ionic from '@ionic/vue'
+import '@ionic/core/css/ionic.bundle.css'
+
+Vue.use(Ionic)
+...
+```
+
+6. 在 `src/router.js` 中使用 `IonicVueRouter` 替换默认的vue router：
+
+```
+import Vue from 'vue'
+import { IonicVueRouter } from '@ionic/vue';
+import Home from './views/Home.vue'
+
+Vue.use(IonicVueRouter)
+
+export default new IonicVueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Home
+    }
+  ]
+})
+```
+
+7. 将 `src/App.vue` 内容修改为：
+
+```
+<template>
+  <div id="app">
+    <ion-app>
+      <ion-vue-router/>
+    </ion-app>
+  </div>
+</template>
+```
+
+8. 将 `src/views/Home.vue` 内容修改为：
+
+```
+<template>
+  <div class="ion-page">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          ZipInfo
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">My App</ion-content>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'home',
+  components: {}
+}
+</script>
+```
+
+最后，我们运行`yarn serve`看下效果：
+
+![1](http://lc-jOYHMCEn.cn-n1.lcfile.com/63ae4b1e9d2926ece165/Screen%20Shot%202019-06-06%20at%2011.58.36%20AM.png)
