@@ -36,7 +36,7 @@
 
 # 创建项目
 
-项目使用Vue + Ionic的组合进行开发。使用vscode的同学，建议安装[Vetur](https://vuejs.github.io/vetur/)插件，能增加开发效率哦。
+项目使用Vue + Ionic的组合进行开发。本文主要关注PWA的搭建，因此vue、ionic等技术不做过多描述。使用vscode的同学，建议安装[Vetur](https://vuejs.github.io/vetur/)插件，能增加开发效率哦。
 
 1. 首先全局安装 `@vue/cli`：
 
@@ -139,18 +139,23 @@ export default {
 
 ## 1. 搜索组件
 
-我们在 `src/components` 下面新建 `ZipSearch.vue` 文件作为邮编搜索组件，内容如下：
+我们在 `src/components` 下面新建 `ZipSearch.vue` 文件作为邮编搜索组件，主要逻辑为当用户输入一串字符，按下查找按钮，如果输入合法则触发`get-zip`事件，如果不合法则给出提示。
 
 **ZipSearch.vue**
 
 ```
 <template>
   <ion-grid>
-    <form>
+    <form @submit="onSubmit">
       <ion-col>
         <ion-item>
           <ion-label>ZipCode:</ion-label>
-          <ion-input name="zip"></ion-input>
+          <ion-input
+            :value="zip"
+            @input="zip = $event.target.value"
+            name="zip"
+            placeholder="Enter US ZipCode"
+          />
         </ion-item>
       </ion-col>
       <ion-col>
@@ -162,26 +167,171 @@ export default {
 
 <script>
 export default {
-  name: "ZipSearch"
+  name: "ZipSearch",
+  data() {
+    return {
+      zip: ""
+    };
+  },
+  methods: {
+    onSubmit(e) {
+      e.preventDefault();
+      const zipRegex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+      const isValid = zipRegex.test(this.zip);
+      if (!isValid) {
+        this.showAlert();
+      } else {
+        this.$emit("get-zip", this.zip);
+      }
+      this.zip = "";
+    },
+    showAlert() {
+      return this.$ionic.alertController
+        .create({
+          header: "Enter zipcode",
+          message: "Please enter a valid US ZipCode",
+          buttons: ["OK"]
+        })
+        .then(a => a.present());
+    }
+  }
 };
 </script>
 ```
 
-在 `src/views/Home.vue` 中引入 `ZipSearch` 组件：
+在 `src/views/Home.vue` 中引入 `ZipSearch` 组件，当`Home`接收到`get-zip`事件时调用 http://www.zippopotam.us 的接口，获取邮编对应的信息：
 
 ```
 ...
     <ion-content class="ion-padding">
-      <ZipSearch/>
+      <ZipSearch v-on:get-zip="getZipInfo"/>
     </ion-content>
 ...
 
+<script>
 import ZipSearch from "../components/ZipSearch";
 
 export default {
   name: "home",
   components: {
     ZipSearch
+  },
+  data() {
+    return {
+      info: null
+    };
+  },
+  methods: {
+    async getZipInfo(zip) {
+      const res = await fetch(`https://api.zippopotam.us/us/${zip}`);
+      if (res.status == 404) {
+        this.showAlert();
+      }
+      this.info = await res.json();
+    },
+    showAlert() {
+      return this.$ionic.alertController
+        .create({
+          header: "Not Valid",
+          message: "Please enter a valid US ZipCode",
+          buttons: ["OK"]
+        })
+        .then(a => a.present());
+    }
   }
 };
+</script>
 ```
+
+获取到邮编信息后我们还需要一个展示邮编信息的组件和一个清除信息的按钮，在 `src/components` 下面新建 `ZipInfo.vue`和`ClearInfo.vue` 。
+
+**ZipInfo.vue**
+
+```
+<template>
+  <ion-card v-if="info">
+    <ion-card-header>
+      <ion-card-subtitle>{{info['post code']}}</ion-card-subtitle>
+      <ion-card-title>{{info['places'][0]['place name']}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <strong>State:</strong>
+            {{info['places'][0]['state']}} ({{info['places'][0]['state abbreviation']}})
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <strong>Latitude:</strong>
+            {{info['places'][0]['latitude']}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <strong>Longitude:</strong>
+            {{info['places'][0]['longitude']}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</template>
+
+<script>
+export default {
+  name: "ZipInfo",
+  props: ["info"]
+};
+</script>
+```
+
+**ClearInfo.vue**
+
+```
+<template>
+  <ion-button color="light" expand="block" v-if="info" @click="$emit('clear-info')">Clear</ion-button>
+</template>
+
+<script>
+export default {
+  name: "ClearInfo",
+  props: ["info"]
+};
+</script>
+```
+
+最后，我们在`Home`中引入`ZipInfo`和`ClearInfo`组件：
+
+**src/views/Home.vue**
+
+```
+...
+    <ion-content class="ion-padding">
+      <ZipSearch v-on:get-zip="getZipInfo"/>
+      <ZipInfo v-bind:info="info"/>
+      <ClearInfo v-bind:info="info" v-on:clear-info="clearInfo"/>
+    </ion-content>
+...
+
+import ZipInfo from "../components/ZipInfo";
+import ClearInfo from "../components/ClearInfo";
+
+export default {
+  name: "home",
+  components: {
+    ZipSearch, ZipInfo
+  },
+  methods:{
+    ...
+    clearInfo(){
+      this.info = null;
+    }
+  }
+}
+```
+
+到此，app的主体就完成了，看下效果：
+
+![app](http://lc-jOYHMCEn.cn-n1.lcfile.com/b862fcdaa7d21fa8bed6/app.gif)
