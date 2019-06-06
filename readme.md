@@ -135,7 +135,7 @@ export default {
 
 ![1](http://lc-jOYHMCEn.cn-n1.lcfile.com/63ae4b1e9d2926ece165/Screen%20Shot%202019-06-06%20at%2011.58.36%20AM.png)
 
-# 功能实现
+# App功能实现
 
 ## 1. 搜索组件
 
@@ -335,3 +335,5 @@ export default {
 到此，app的主体就完成了，看下效果：
 
 ![app](http://lc-jOYHMCEn.cn-n1.lcfile.com/b862fcdaa7d21fa8bed6/app.gif)
+
+# 
