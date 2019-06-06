@@ -32,7 +32,7 @@
 
 可以发现PWA具备了原生应用的主要能力，但是开发流程却比原生应用更加简洁：a. html/css/js的群众基础更好，开发效率更高；b. 省去了为不同系统开发独立版本的大量成本；c. 省去了上架到应用市场的繁琐流程；d. 无需前往应用商店下载，用户使用起来也更加方便。但是值得注意的是，PWA还是相对比较新的技术，规范还有很多调整的空间，很多浏览器对PWA的支持也还不完善，但是PWA是一个趋势，所以现在学习正合适！
 
-本文将通过一个简单的列子像大家展示PWA的开发流程。完成后的列子是 [这样]() 的。
+本文将通过一个简单的列子像大家展示PWA的开发流程。完成后的列子是 [这样](https://mudontire.github.io/pwa-tutorial/) 的。
 
 # 创建项目
 
@@ -336,4 +336,37 @@ export default {
 
 ![app](http://lc-jOYHMCEn.cn-n1.lcfile.com/b862fcdaa7d21fa8bed6/app.gif)
 
-# 
+# 实现PWA
+
+我们使用现成的 [`@vue/pwa`](https://github.com/vuejs/vue-cli/tree/v3/packages/%40vue/cli-plugin-pwa) 插件来给我们的app增加PWA的能力。
+
+## 1. 安装 `@vue/pwa`
+
+```
+vue add @vue/pwa
+```
+
+安装完成后项目中增加了 `public/manifest.json` 和 `registerServiceWorker.js`两个文件。其中 `public/manifest.json` 文件内容如下：
+
+```
+{
+  "name": "vue-ionic-pwa",
+  "short_name": "vue-ionic-pwa",
+  "icons": [
+    {
+      "src": "./img/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#4DBA87"
+}
+```
