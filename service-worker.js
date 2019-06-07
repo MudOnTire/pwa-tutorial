@@ -30,4 +30,4 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 workbox.routing.registerNavigationRoute("/index.html");
 
-workbox.routing.registerRoute(/^https:\/\/api\.zippopotam\.us'/, workbox.strategies.networkFirst({ "cacheName":"api-cache","networkTimeoutSeconds":20, plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]})] }), 'GET');
+workbox.routing.registerRoute(/^https:\/\/api.zippopotam.us/, workbox.strategies.networkFirst({ "cacheName":"api-cache","networkTimeoutSeconds":20, plugins: [new workbox.cacheableResponse.Plugin({"statuses":[0,200]})] }), 'GET');
