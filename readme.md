@@ -4,7 +4,7 @@
 
 # 简介
 
-Web前端的同学是否想过学习app开发，以弥补自己移动端能力的不足？但在面对一众的选择时很多同学略感迷茫，是学习ios还是android开发？是学习原生开发、混合开发（比如：[Ionic](https://ionicframework.com/))，还是使用[react native](https://facebook.github.io/react-native/)或者[flutter](https://flutter.dev/)这样的跨平台框架？而app开发的学习周期长、学习成本高也让一部分人望而却步。得益于前端技术的飞速发展、浏览器性能的不断提高，使用网页技术开发出接近原生体验的应用得以变为现实，PWA就在这样的背景下应运而生。可以用自己熟悉的HTML、CSS、Javascript开发出媲美原生app的网站，不仅拥有接近原生app的流畅程度，并且具备原生app才有的特性，比如：a. 可以在主屏上安装应用图标，b. 离线状态下访问，c. 获取消息通知，等等。。PWA的出现让大家看到了希望！
+Web前端的同学是否想过学习app开发，以弥补自己移动端能力的不足？但在面对一众的选择时很多同学略感迷茫，是学习ios还是android开发？是学习原生开发、混合开发（比如：[Ionic](https://ionicframework.com/))，还是使用[react native](https://facebook.github.io/react-native/)或者[flutter](https://flutter.dev/)这样的跨平台框架？而app开发的学习周期长、学习成本高也让一部分人望而却步。得益于前端技术的飞速发展、浏览器性能的不断提高，使用网页技术开发出接近原生体验的应用得以变为现实，PWA就在这样的背景下应运而生。可以用自己熟悉的HTML、CSS、Javascript开发出媲美原生app的网站，不仅拥有接近原生app的流畅程度，并且具备一些原生app才有的特性，比如：a. 可以在主屏上安装应用图标，b. 离线状态下访问，c. 获取消息通知，等等。。PWA的出现让大家看到了希望！
 
 # 对比原生应用
 
@@ -36,33 +36,33 @@ Web前端的同学是否想过学习app开发，以弥补自己移动端能力�
 
 # 创建项目
 
-项目使用Vue + Ionic的组合进行开发。本文主要关注PWA的搭建，因此vue、ionic等技术不做过多描述。使用vscode的同学，建议安装[Vetur](https://vuejs.github.io/vetur/)插件增加开发效率。
+项目使用Vue + Ionic的组合进行开发。本文主要关注PWA的搭建，因此vue、ionic等技术不做过多描述。使用VSCode的同学，建议安装[Vetur](https://vuejs.github.io/vetur/)插件增加开发效率。
 
-1. 首先全局安装 `@vue/cli`：
+**1. 首先全局安装 `@vue/cli`：**
 
 ```
 npm install -g @vue/cli
 ```
 
-2. 初始化vue项目：
+**2. 初始化vue项目：**
 
 ```
 vue create vue-ionic-pwa
 ```
 
-3. 因为ionic的路由依赖于`vue-router`，所以接下来安装 `vue-router`：
+**3. 因为ionic的路由依赖于`vue-router`，所以接下来安装 `vue-router`：**
 
 ```
 vue add router
 ```
 
-4. 安装 `@ionic/vue`
+**4. 安装 `@ionic/vue`**
 
 ```
 npm install @ionic/vue
 ```
 
-5. 在 `src/main.js` 中添加对ionic的引用：
+**5. 在 `src/main.js` 中添加对ionic的引用：**
 
 ```
 ...
@@ -73,7 +73,7 @@ Vue.use(Ionic)
 ...
 ```
 
-6. 在 `src/router.js` 中使用 `IonicVueRouter` 替换默认的vue router：
+**6. 在 `src/router.js` 中使用 `IonicVueRouter` 替换默认的vue router：**
 
 ```
 import Vue from 'vue'
@@ -95,7 +95,7 @@ export default new IonicVueRouter({
 })
 ```
 
-7. 将 `src/App.vue` 内容修改为：
+**7. 将 `src/App.vue` 内容修改为：**
 
 ```
 <template>
@@ -107,7 +107,7 @@ export default new IonicVueRouter({
 </template>
 ```
 
-8. 将 `src/views/Home.vue` 内容修改为：
+**8. 将 `src/views/Home.vue` 内容修改为：**
 
 ```
 <template>
@@ -131,7 +131,7 @@ export default {
 </script>
 ```
 
-最后，我们运行`yarn serve`看下效果：
+**最后，我们运行`yarn serve`看下效果：**
 
 ![1](http://lc-jOYHMCEn.cn-n1.lcfile.com/63ae4b1e9d2926ece165/Screen%20Shot%202019-06-06%20at%2011.58.36%20AM.png)
 
