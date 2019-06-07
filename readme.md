@@ -4,7 +4,7 @@
 
 # 简介
 
-Web前端的同学是否想过学习app开发，以弥补自己移动端能力的不足？但在面对一众的选择时很多同学略感迷茫，是学习ios还是android开发？是学习原生开发、混合开发（[Ionic](https://ionicframework.com/))，还是使用[react native](https://facebook.github.io/react-native/)或者[flutter](https://flutter.dev/)这样的跨平台框架？而app开发的学习周期长、学习成本高也让一部分人望而却步。得益于前端技术的飞速发展、浏览器性能的不断提高，使用网页技术开发出接近原生体验的应用得以变为现实，PWA就在这样的背景下应运而生。可以用自己熟悉的HTML、CSS、Javascript开发出媲美原生app的网站，不仅拥有接近原生app的流畅程度，并且具备原生app才有的特性，比如：a. 可以在主屏上安装应用图标，b. 离线状态下访问，c. 获取消息通知，等等。。PWA的出现让大家看到了希望！
+Web前端的同学是否想过学习app开发，以弥补自己移动端能力的不足？但在面对一众的选择时很多同学略感迷茫，是学习ios还是android开发？是学习原生开发、混合开发（比如：[Ionic](https://ionicframework.com/))，还是使用[react native](https://facebook.github.io/react-native/)或者[flutter](https://flutter.dev/)这样的跨平台框架？而app开发的学习周期长、学习成本高也让一部分人望而却步。得益于前端技术的飞速发展、浏览器性能的不断提高，使用网页技术开发出接近原生体验的应用得以变为现实，PWA就在这样的背景下应运而生。可以用自己熟悉的HTML、CSS、Javascript开发出媲美原生app的网站，不仅拥有接近原生app的流畅程度，并且具备原生app才有的特性，比如：a. 可以在主屏上安装应用图标，b. 离线状态下访问，c. 获取消息通知，等等。。PWA的出现让大家看到了希望！
 
 # 对比原生应用
 
