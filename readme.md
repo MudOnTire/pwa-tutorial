@@ -141,7 +141,7 @@ App主要有三部分组成：1. 搜索组件，用于输入邮编并查询，2.
 
 ## 1. 搜索组件
 
-我们在 `src/components` 下面新建 `ZipSearch.vue` 文件作为邮编搜索组件，主要逻辑为当用户输入一串字符，按下查找按钮，如果输入合法则触发`get-zip`事件，如果不合法则给出提示。
+我们在 `src/components` 下面新建 `ZipSearch.vue` 文件作为邮编搜索组件，主要逻辑为当用户输入一串字符，按下搜索按钮，如果输入合法则触发`get-zip`事件，如果不合法则给出提示。
 
 **ZipSearch.vue**
 
@@ -313,7 +313,7 @@ export default {
 </script>
 ```
 
-最后，我们在`Home`中引入`ZipInfo`和`ClearInfo`组件：
+接着在`Home`中引入`ZipInfo`和`ClearInfo`组件：
 
 **src/views/Home.vue**
 
@@ -343,7 +343,7 @@ export default {
 }
 ```
 
-到此，app的主体就完成了，效果如图：
+到此，app的主体就完成了，效果如下：
 
 ![app](http://lc-jOYHMCEn.cn-n1.lcfile.com/b862fcdaa7d21fa8bed6/app.gif)
 
@@ -473,6 +473,6 @@ module.exports = {
 
 ![offline](http://lc-jOYHMCEn.cn-n1.lcfile.com/636fdcb275774c8b28b9/offline.jpg)
 
-好了，一个简单的PWA就已经制作完成了。当然PWA的功能远不止本文所展示的，比如推送、安装到手机，后续有机会再跟大家分享。
+好了，一个简单的PWA就已经制作完成了。当然PWA的功能远不止本文所展示的，比如推送、安装到手机，后续有机会再跟大家分享，谢谢🙏。
 
 本文demo地址：https://github.com/MudOnTire/pwa-tutorial
